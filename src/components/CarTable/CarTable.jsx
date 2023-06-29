@@ -1,12 +1,10 @@
-import DeleteModal from 'components/DaleteModal/DeleteModal';
-import EditModal from 'components/EditModal/EditModal';
 import React, { useEffect, useState } from 'react';
 
 const CarTable = ({ cars, onDelete, onEdit }) => {
   const [currentPage, setCurrentPage] = useState(1); // Current page of the table
   const [carsPerPage] = useState(25); // Number of cars per page
   const [searchTerm, setSearchTerm] = useState(''); // Search text
-  const [selectedCar, setSelectedCar] = useState(null); // Selected car for editing/deleting
+  // const [selectedCar, setSelectedCar] = useState(null); // Selected car for editing/deleting
 
   const indexOfLastCar = currentPage * carsPerPage;
   const indexOfFirstCar = indexOfLastCar - carsPerPage;
@@ -33,12 +31,12 @@ const CarTable = ({ cars, onDelete, onEdit }) => {
 
   const currentCars = filteredCars.slice(indexOfFirstCar, indexOfLastCar);
 
-  const paginate = pageNumber => setCurrentPage(pageNumber);
+  // const paginate = pageNumber => setCurrentPage(pageNumber);
 
-  const handleSearch = event => {
-    setSearchTerm(event.target.value);
-    setCurrentPage(1);
-  };
+  // const handleSearch = event => {
+  //   setSearchTerm(event.target.value);
+  //   setCurrentPage(1);
+  // };
   const handleDelete = carId => {
     onDelete(carId);
   };
