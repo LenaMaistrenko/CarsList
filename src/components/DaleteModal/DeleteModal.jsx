@@ -1,17 +1,16 @@
 import React from 'react';
-import css from '../DaleteModal/DeleteModal.module.scss';
+import css from '../DaleteModal/DeleteModal.module.css';
 
 const DeleteModal = ({ car, onDelete, onCancel }) => {
-  console.log(car);
   const handleDelete = () => {
     onDelete(car.id);
   };
 
   return (
-    <div className={css.modalOverlay}>
-      <div className={css.modalContent}>
-        <h3>Delete Car</h3>
-        <p>Are you sure you want to delete this car?</p>
+    <div className={css.modal_container}>
+      <div className={css.modal_content}>
+        <h2>Delete Car</h2>
+        <p>Are you sure want to delete this car?</p>
         <p>
           <strong>Company:</strong> {car?.car}
         </p>
@@ -22,14 +21,18 @@ const DeleteModal = ({ car, onDelete, onCancel }) => {
           <strong>VIN:</strong> {car?.car_vin}
         </p>
         <p>
-          <em>This action cannot be undone.</em>
+          <em>You cannot undo this action.</em>
         </p>
-        <div className="modal-buttons">
-          <button className="btn-cancel" onClick={onCancel}>
-            Cancel
-          </button>
-          <button className="btn-delete" onClick={handleDelete}>
+        <div className={css.btn_container}>
+          <button
+            type="button"
+            className={css.btn_delete}
+            onClick={handleDelete}
+          >
             Delete
+          </button>
+          <button type="button" className={css.btn_cancel} onClick={onCancel}>
+            Cancel
           </button>
         </div>
       </div>

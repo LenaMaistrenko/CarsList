@@ -1,53 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import css from './CarTable.module.css';
 
-const CarTable = ({ cars, onDelete, onEdit }) => {
-  const [currentPage, setCurrentPage] = useState(1); // Current page of the table
-  const [carsPerPage] = useState(25); // Number of cars per page
-  const [searchTerm, setSearchTerm] = useState(''); // Search text
-  // const [selectedCar, setSelectedCar] = useState(null); // Selected car for editing/deleting
+const CarTable = ({ cars, onDelete, onEdit, currentPage, carsPerPage }) => {
+  const indexOfFirstCar = (currentPage - 1) * carsPerPage;
 
-  const indexOfLastCar = currentPage * carsPerPage;
-  const indexOfFirstCar = indexOfLastCar - carsPerPage;
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [cars]);
-  const filteredCars = cars.filter(car => {
-    return (
-      (car.company &&
-        car.company.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (car.model &&
-        car.model.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (car.vin && car.vin.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (car.color &&
-        car.color.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (car.year && car.year.toString().includes(searchTerm)) ||
-      (car.price && car.price.toString().includes(searchTerm)) ||
-      (car.availability === true &&
-        'true'.includes(searchTerm.toLowerCase())) ||
-      (Boolean(car.availability) === false &&
-        'false'.includes(searchTerm.toLowerCase()))
-    );
-  });
-
-  const currentCars = filteredCars.slice(indexOfFirstCar, indexOfLastCar);
-
-  // const paginate = pageNumber => setCurrentPage(pageNumber);
-
-  // const handleSearch = event => {
-  //   setSearchTerm(event.target.value);
-  //   setCurrentPage(1);
-  // };
-  const handleDelete = carId => {
-    onDelete(carId);
-  };
-  const handleEdit = car => {
-    onEdit(car);
-  };
   return (
-    <div>
-      <table>
+    <div className={css.carTable_container}>
+      <table className={css.carTable_table}>
+        <caption>CAR INFORMATION</caption>
         <thead>
           <tr>
+            <th>#</th>
             <th>Company</th>
             <th>Model</th>
             <th>VIN</th>
@@ -59,22 +22,33 @@ const CarTable = ({ cars, onDelete, onEdit }) => {
           </tr>
         </thead>
         <tbody>
-          {currentCars.map(car => (
+          {cars.map((car, index) => (
             <tr key={car.id}>
+              <td>{indexOfFirstCar + index + 1}</td>
               <td>{car.car}</td>
               <td>{car.car_model}</td>
               <td>{car.car_vin}</td>
               <td>{car.car_color}</td>
               <td>{car.car_model_year}</td>
               <td>{car.price}</td>
-              <td>{`${car.availability}`}</td>
+              <td>{car.availability.toString()}</td>
               <td>
-                <button type="button" onClick={() => handleEdit(car)}>
-                  Edit
-                </button>
-                <button type="button" onClick={() => handleDelete(car)}>
-                  Delete
-                </button>
+                <div className={css.carTable_table_actions}>
+                  <button
+                    type="button"
+                    className={css.carTable_table_actions_btn}
+                    onClick={() => onEdit(car)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    className={css.carTable_table_actions_btn}
+                    onClick={() => onDelete(car.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
               </td>
             </tr>
           ))}

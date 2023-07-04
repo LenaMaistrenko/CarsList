@@ -1,0 +1,19 @@
+.pagination_container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #f8f8f8;
+  padding: 10px 0;
+}
+
+.pagination_content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination_content button.active {
+  background-color: rgb(155, 178, 189);
+  color: #333;
+  cursor: pointer;
+}
